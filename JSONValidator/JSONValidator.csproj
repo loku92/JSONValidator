@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lekser.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="ValidatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
