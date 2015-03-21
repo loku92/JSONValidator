@@ -4,21 +4,21 @@ namespace JSONValidator
    
     public class Token
     {
-        public static readonly int JSONFILE = 0;
-        public static readonly int END = 100;
-        public static readonly int OBJECTSTART = 1;
-        public static readonly int OBJECTEND = 2;
-        public static readonly int ARRAYSTART = 3;
-        public static readonly int ARRAYEND = 4;
-        public static readonly int QUOTE = 5;
-        public static readonly int COLON = 6;
-        public static readonly int COMMA = 7;
-        public static readonly int DOT = 8;
-        public static readonly int NUMBER = 10;
-        public static readonly int CHAR = 20;
-        public static readonly int TRUE = 30;
-        public static readonly int FALSE = 40;
-        public static readonly int NULL = 50;
+        public const int JSONFILE = 0;
+        public const int END = 100;
+        public const int OBJECTSTART = 1;
+        public const int OBJECTEND = 2;
+        public const int ARRAYSTART = 3;
+        public const int ARRAYEND = 4;
+        public const int QUOTE = 5;
+        public const int COLON = 6;
+        public const int COMMA = 7;
+        public const int DOT = 8;
+        public const int NUMBER = 10;
+        public const int CHAR = 20;
+        public const int TRUE = 30;
+        public const int FALSE = 40;
+        public const int NULL = 50;
 
 
         public int line;
