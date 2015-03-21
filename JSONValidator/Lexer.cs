@@ -143,6 +143,8 @@ namespace JSONValidator
                                 tmp += json[i].ToString();
                                 i++;
                             }
+                            // cofniecie indexu
+                            i--;
                             if (numberRegex.IsMatch(tmp))
                                 TokensList.Add(new Token(Token.NUMBER, i, line));
                             else
@@ -151,7 +153,10 @@ namespace JSONValidator
                         }
                         else if (c == 't' || c == 'T')
                         {
-                            tmp = json.Substring(i, i + 4).ToLower();
+                            //Console.WriteLine(json[i].ToString()+ " " + json[i + 1].ToString() + " " + json[i + 2].ToString() +" "+ json[i + 3].ToString());
+                            //tmp = json.Substring(i, i + 3).ToLower();   
+                            //Powinno byc to co powyzej ale jest bug w bibliotece i nie zawsze dziala poprawnie funkcja substring
+                            tmp = json[i].ToString() + json[i + 1].ToString() + json[i + 2].ToString() + json[i + 3].ToString(); 
                             if (String.Equals(tmp,"true"))
                             {
                                 TokensList.Add(new Token(Token.TRUE, i, line));
@@ -167,7 +172,8 @@ namespace JSONValidator
                             //2
                         else if (c == 'f' || c == 'F')
                         {
-                            tmp = json.Substring(i, i + 5).ToLower();
+                            //tmp = json.Substring(i, i + 5).ToLower();
+                            tmp = json[i].ToString() + json[i+1].ToString() + json[i+2].ToString() + json[i+3].ToString() + json[i+4];
                             if (String.Equals(tmp, "false"))
                             {
                                 TokensList.Add(new Token(Token.FALSE, i, line));
@@ -183,7 +189,8 @@ namespace JSONValidator
                             //3
                         else if (c == 'n' || c == 'N')
                         {
-                            tmp = json.Substring(i , i + 4).ToLower();
+                           // tmp = json.Substring(i , i + 4).ToLower();
+                            tmp = json[i].ToString() + json[i + 1].ToString() + json[i + 2].ToString() + json[i + 3].ToString();
                             if (String.Equals(tmp, "null"))
                             {
                                 TokensList.Add(new Token(Token.NULL, i, line));

@@ -26,7 +26,6 @@ namespace JSONValidator
 
         private void validateButton_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("Start");
             List<Token> TokensList = new List<Token>();
             Lexer l = new Lexer();
             Parser p = new Parser();
@@ -44,8 +43,11 @@ namespace JSONValidator
             if (!failed)
                 resultTextBox.Text = "Json is valid.";
             failed = false;
-            Console.WriteLine("Finished");
-
+#if DEBUG
+            foreach(Token t in TokensList){
+                Console.Write(t);
+            }
+#endif
         }
     }
 }

@@ -48,6 +48,39 @@ namespace JSONValidator
 
         public override string ToString()
         {
+            switch (this.token)
+            {
+                case 1:
+                    return "{";
+                case 2:
+                    return "}";
+                case 3:
+                    return "[";
+                case 4:
+                    return "]";
+                case 5:
+                    return "\"";
+                case 6:
+                    return ":";
+                case 7:
+                    return ",";
+                case 8:
+                    return ".";
+                case 10:
+                    return "5";
+                case 20:
+                    return "b";
+                case 30:
+                    return "true";
+                case 40:
+                    return "false";
+                case 50:
+                    return "null";
+                default:
+                    break;
+
+            }
+
             return token.ToString();
         }
         
