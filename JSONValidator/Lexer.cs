@@ -10,9 +10,8 @@ namespace JSONValidator
     /* Analizator leksykalny */
     public class Lexer
     {
-        private string data;
-        Regex numberRegex = new Regex(@"^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$"); // double , int i wykladnicze
-        char[] numberChars = { 'e', 'E', '-' , '.', '+' };//tablica z akceptowanymi znaczkami dla liczby nie liczac cyfr
+        private static Regex numberRegex = new Regex(@"^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$"); // double, int i postaci wykladnicze
+        private static char[] numberChars = { 'e', 'E', '-' , '.', '+' };//tablica z akceptowanymi znaczkami dla liczby nie liczac cyfr
 
 
         /*Analiza leksykalna*/
@@ -24,15 +23,12 @@ namespace JSONValidator
             char c; //zmienna do iteracji
             string tmp = ""; //tymczasowa pomocnicza zmienna
             bool isIn = false;// zmienna do sprawdzania czy jest w srodku czy poza napisem
-
-            json = json.Trim(); // usuwamy biale znaki z przodu i tylu
-            data = (string)json.Clone(); 
+            json = json.Trim(); // usuwamy biale znaki z przodu i tylu             
           
             // Jeśli nic nie dostalismy => koniec
             if (json.Length == 0) 
             {
                 throw new ParseJSONException("JSON file is empty.\n");
-                return true;
             }
 
             TokensList.Add(new Token(Token.JSONFILE, i, line));
@@ -124,7 +120,7 @@ namespace JSONValidator
                     continue;
                 }
                 /* Jesli nie jestesmy w napisie a pojawia sie litery lub cyfry
-                * 1. Jesli cyfra/cyfry  => NUMBER
+                * 1. Jesli liczba  => NUMBER
                 * 2. Sprawdzamy czy moze jakas wartosc logiczna => TRUE v FALSE
                 * 3. Sprawdzamy czy null => NULL
                 * 
@@ -134,7 +130,7 @@ namespace JSONValidator
                 {
                     try
                     {
-                        //1
+                        //NUMBER
                         if (c == '-' || c == '+' || c == 'E' || c == 'e' || c == '.' || Char.IsDigit(c))
                         {
                             //iterujemy i laczymy cyferki/znaczki a potem patrzymy czy dobry regex
@@ -143,7 +139,6 @@ namespace JSONValidator
                                 tmp += json[i].ToString();
                                 i++;
                             }
-                            // cofniecie indexu
                             i--;
                             if (numberRegex.IsMatch(tmp))
                                 TokensList.Add(new Token(Token.NUMBER, i, line));
@@ -151,12 +146,13 @@ namespace JSONValidator
                                 throw new ParseJSONException("Failed in line:" + line + " char:" + i + "! Number was expected!");
                             tmp = "";
                         }
+                        //TRUE
                         else if (c == 't' || c == 'T')
                         {
                             //Console.WriteLine(json[i].ToString()+ " " + json[i + 1].ToString() + " " + json[i + 2].ToString() +" "+ json[i + 3].ToString());
                             //tmp = json.Substring(i, i + 3).ToLower();   
                             //Powinno byc to co powyzej ale jest bug w bibliotece i nie zawsze dziala poprawnie funkcja substring
-                            tmp = json[i].ToString() + json[i + 1].ToString() + json[i + 2].ToString() + json[i + 3].ToString(); 
+                            tmp = (json[i].ToString() + json[i + 1].ToString() + json[i + 2].ToString() + json[i + 3].ToString()).ToLower(); 
                             if (String.Equals(tmp,"true"))
                             {
                                 TokensList.Add(new Token(Token.TRUE, i, line));
@@ -169,11 +165,11 @@ namespace JSONValidator
                                 throw new ParseJSONException("Failed in line:" + line + " char:" + i + "! String not in quotes!");
                             }
                         }
-                            //2
+                        //FALSE
                         else if (c == 'f' || c == 'F')
                         {
                             //tmp = json.Substring(i, i + 5).ToLower();
-                            tmp = json[i].ToString() + json[i+1].ToString() + json[i+2].ToString() + json[i+3].ToString() + json[i+4];
+                            tmp = (json[i].ToString() + json[i+1].ToString() + json[i+2].ToString() + json[i+3].ToString() + json[i+4]).ToLower();
                             if (String.Equals(tmp, "false"))
                             {
                                 TokensList.Add(new Token(Token.FALSE, i, line));
@@ -186,11 +182,11 @@ namespace JSONValidator
                                 throw new ParseJSONException("Failed in line:" + line + " char:" + i + "! String not in quotes!");
                             }
                         }
-                            //3
+                        //NULL
                         else if (c == 'n' || c == 'N')
                         {
                            // tmp = json.Substring(i , i + 4).ToLower();
-                            tmp = json[i].ToString() + json[i + 1].ToString() + json[i + 2].ToString() + json[i + 3].ToString();
+                            tmp = (json[i].ToString() + json[i + 1].ToString() + json[i + 2].ToString() + json[i + 3].ToString()).ToLower();
                             if (String.Equals(tmp, "null"))
                             {
                                 TokensList.Add(new Token(Token.NULL, i, line));
