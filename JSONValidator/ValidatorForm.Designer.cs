@@ -30,15 +30,15 @@
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.jsonTextBox = new System.Windows.Forms.TextBox();
-            this.validateButton = new System.Windows.Forms.Button();
-            this.clearButton = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.resultTextBox = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.clearButton = new System.Windows.Forms.Button();
+            this.validateButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -61,25 +61,6 @@
             this.panel1.Size = new System.Drawing.Size(624, 441);
             this.panel1.TabIndex = 2;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.clearButton);
-            this.panel2.Controls.Add(this.validateButton);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 361);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(624, 80);
-            this.panel2.TabIndex = 0;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.resultTextBox);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(443, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(181, 361);
-            this.panel3.TabIndex = 1;
-            // 
             // jsonTextBox
             // 
             this.jsonTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -92,25 +73,14 @@
             this.jsonTextBox.Size = new System.Drawing.Size(437, 361);
             this.jsonTextBox.TabIndex = 2;
             // 
-            // validateButton
+            // panel3
             // 
-            this.validateButton.Location = new System.Drawing.Point(537, 45);
-            this.validateButton.Name = "validateButton";
-            this.validateButton.Size = new System.Drawing.Size(75, 23);
-            this.validateButton.TabIndex = 0;
-            this.validateButton.Text = "Validate";
-            this.validateButton.UseVisualStyleBackColor = true;
-            this.validateButton.Click += new System.EventHandler(this.validateButton_Click);
-            // 
-            // clearButton
-            // 
-            this.clearButton.Location = new System.Drawing.Point(12, 45);
-            this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(75, 23);
-            this.clearButton.TabIndex = 1;
-            this.clearButton.Text = "Clear";
-            this.clearButton.UseVisualStyleBackColor = true;
-            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            this.panel3.Controls.Add(this.resultTextBox);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel3.Location = new System.Drawing.Point(443, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(181, 361);
+            this.panel3.TabIndex = 1;
             // 
             // resultTextBox
             // 
@@ -122,20 +92,52 @@
             this.resultTextBox.Size = new System.Drawing.Size(181, 361);
             this.resultTextBox.TabIndex = 0;
             // 
-            // Form1
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.clearButton);
+            this.panel2.Controls.Add(this.validateButton);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 361);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(624, 80);
+            this.panel2.TabIndex = 0;
+            // 
+            // clearButton
+            // 
+            this.clearButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.clearButton.Location = new System.Drawing.Point(0, 0);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(75, 80);
+            this.clearButton.TabIndex = 1;
+            this.clearButton.Text = "Clear";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
+            // validateButton
+            // 
+            this.validateButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.validateButton.Location = new System.Drawing.Point(549, 0);
+            this.validateButton.Name = "validateButton";
+            this.validateButton.Size = new System.Drawing.Size(75, 80);
+            this.validateButton.TabIndex = 0;
+            this.validateButton.Text = "Validate";
+            this.validateButton.UseVisualStyleBackColor = true;
+            this.validateButton.Click += new System.EventHandler(this.validateButton_Click);
+            // 
+            // ValidatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 441);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Name = "Form1";
-            this.Text = "Json walidator";
+            this.Name = "ValidatorForm";
+            this.Text = "JSON Validator";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
