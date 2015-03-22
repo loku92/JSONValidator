@@ -2,6 +2,7 @@
 namespace JSONValidator
 {
    
+    /* Definiton of tokens */
     public class Token
     {
         public const int JSONFILE = 0;
@@ -20,10 +21,9 @@ namespace JSONValidator
         public const int FALSE = 40;
         public const int NULL = 50;
 
-
-        public int line;
-        public int cnumber;
-        public int token;
+        public int line;        //line 
+        public int cnumber;     //char number from beggining
+        public int token;       //token
 
         public Token(int token, int column , int line)
         {
@@ -76,9 +76,10 @@ namespace JSONValidator
                     return "false";
                 case 50:
                     return "null";
+                case 100:
+                    return "EOF";
                 default:
                     break;
-
             }
 
             return token.ToString();

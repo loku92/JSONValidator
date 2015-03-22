@@ -9,18 +9,19 @@ namespace JSONValidator
     public class Parser
     {
         public List<Token> tokens;
-        private int currenToken;
-        private int index;
+        private int currenToken;        //numer obecnie przetwarzanego tokenu
+        private int index;              //index obecnie przetwarzanego tokeny
 
+        /*
+         * Całość wg gramatyki w docx 
+        */
         public Parser()
         {
             tokens = new List<Token>();
             currenToken = 0;
             index = 0;
         }
-
-        
-
+         
         public void parse(List<Token> TokensList)
         {
             tokens = TokensList;
@@ -39,8 +40,7 @@ namespace JSONValidator
                     array();
                     break;
                 default:
-                    throw new ParseJSONException("Bad char on start of JSON file! Line:1 Char:1");
-                
+                    throw new ParseJSONException("Bad char on start of JSON file! Line:1 Char:1");                
             }
         }
 
@@ -55,11 +55,11 @@ namespace JSONValidator
         private void objectFun()
         {
             checkLex(Token.OBJECTSTART);
-            members();
+            properties();
             checkLex(Token.OBJECTEND);
         }
 
-        private void members()
+        private void properties()
         {
             switch (currenToken)
             {
@@ -92,6 +92,7 @@ namespace JSONValidator
             checkLex(Token.COLON);
             value();
         }
+
         private void elements()
         {
             switch (currenToken)
@@ -202,6 +203,7 @@ namespace JSONValidator
             }
         }
 
+        //Sprawdzamy czy lex jest taki jak zakladany
         private void checkLex(int p)
         {
             if (currenToken == p)

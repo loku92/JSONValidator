@@ -121,7 +121,7 @@ namespace JSONValidator
                 }
                 /* Jesli nie jestesmy w napisie a pojawia sie litery lub cyfry
                 * 1. Jesli liczba  => NUMBER
-                * 2. Sprawdzamy czy moze jakas wartosc logiczna => TRUE v FALSE
+                * 2. Sprawdzamy czy wartosc logiczna => TRUE v FALSE
                 * 3. Sprawdzamy czy null => NULL
                 * 
                 * Jeśli żaden z powyższych zgłoś błąd 
@@ -133,7 +133,7 @@ namespace JSONValidator
                         //NUMBER
                         if (c == '-' || c == '+' || c == 'E' || c == 'e' || c == '.' || Char.IsDigit(c))
                         {
-                            //iterujemy i laczymy cyferki/znaczki a potem patrzymy czy dobry regex
+                            //iterujemy i laczymy cyfery/znaki a potem patrzymy czy dobry regex
                             while (numberChars.Contains(json[i]) || Char.IsDigit(json[i]))
                             {
                                 tmp += json[i].ToString();
@@ -186,7 +186,7 @@ namespace JSONValidator
                         else if (c == 'n' || c == 'N')
                         {
                            // tmp = json.Substring(i , i + 4).ToLower();
-                            tmp = (json[i].ToString() + json[i + 1].ToString() + json[i + 2].ToString() + json[i + 3].ToString()).ToLower();
+                            tmp = (json[i].ToString() + json[i+1].ToString() + json[i+2].ToString() + json[i+3].ToString()).ToLower();
                             if (String.Equals(tmp, "null"))
                             {
                                 TokensList.Add(new Token(Token.NULL, i, line));
