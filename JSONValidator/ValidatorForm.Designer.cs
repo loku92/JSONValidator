@@ -32,10 +32,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.jsonTextBox = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.resultTextBox = new System.Windows.Forms.TextBox();
+            this.resultTextBox = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.clearButton = new System.Windows.Forms.Button();
             this.validateButton = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -66,6 +67,7 @@
             this.jsonTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.jsonTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.jsonTextBox.Location = new System.Drawing.Point(0, 0);
             this.jsonTextBox.Multiline = true;
             this.jsonTextBox.Name = "jsonTextBox";
@@ -86,14 +88,16 @@
             // 
             this.resultTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resultTextBox.Enabled = false;
+            this.resultTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.resultTextBox.Location = new System.Drawing.Point(0, 0);
-            this.resultTextBox.Multiline = true;
             this.resultTextBox.Name = "resultTextBox";
             this.resultTextBox.Size = new System.Drawing.Size(181, 361);
             this.resultTextBox.TabIndex = 0;
+            this.resultTextBox.Text = "";
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.clearButton);
             this.panel2.Controls.Add(this.validateButton);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -124,6 +128,14 @@
             this.validateButton.UseVisualStyleBackColor = true;
             this.validateButton.Click += new System.EventHandler(this.validateButton_Click);
             // 
+            // panel4
+            // 
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(75, -20);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(474, 100);
+            this.panel4.TabIndex = 2;
+            // 
             // ValidatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -136,7 +148,6 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -152,7 +163,8 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button validateButton;
-        private System.Windows.Forms.TextBox resultTextBox;
+        private System.Windows.Forms.RichTextBox resultTextBox;
+        private System.Windows.Forms.Panel panel4;
 
     }
 }

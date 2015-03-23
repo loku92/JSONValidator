@@ -11,19 +11,27 @@ namespace JSONValidator
     public class Lexer
     {
         private static Regex numberRegex = new Regex(@"^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$"); // double, int i postaci wykladnicze
-        private static char[] numberChars = { 'e', 'E', '-' , '.', '+' };//tablica z akceptowanymi znaczkami dla liczby nie liczac cyfr
-
+        private static char[] numberChars = { 'e', 'E', '-' , '.', '+' };//tablica z akceptowanymi znakami dla liczby nie liczac cyfr
+        public static string jsonf; //kopia tekstu json
+        public static List<string> lines = new List<string>(); // zbiór linii
 
         /*Analiza leksykalna*/
         public bool lexer(string json, ref List<Token> TokensList)
         {
-            int line = 1;
-            int i = 0;
+            Lexer.jsonf = json; // kopia textu json   
+            lines.Clear();
+            
+            int line = 1;//licznik linii
+            int i = 0; //licznik char
+
             char lastChar = ' '; //przechowuje przedostatni znak
-            char c; //zmienna do iteracji
+            char c; //zmienna do iteracji po znakach
+
+            string currentLine = ""; // akumulowana obecna linia
             string tmp = ""; //tymczasowa pomocnicza zmienna
+
             bool isIn = false;// zmienna do sprawdzania czy jest w srodku czy poza napisem
-            json = json.Trim(); // usuwamy biale znaki z przodu i tylu             
+        
           
             // Jeśli nic nie dostalismy => koniec
             if (json.Length == 0) 
@@ -31,12 +39,12 @@ namespace JSONValidator
                 throw new ParseJSONException("JSON file is empty.\n");
             }
 
-            TokensList.Add(new Token(Token.JSONFILE, i, line));
+            TokensList.Add(new Token(Token.JSONFILE, i, line)); //dodajemy token startowy
 
-            for (; i < json.Length; i++)
+            for (;i< json.Length; i++)
             {
                 c = json[i];
-
+                currentLine += c;
                 if (c == '{')
                 {
                     if (isIn)
@@ -113,6 +121,8 @@ namespace JSONValidator
                 }
                 else if (c == '\n')
                 {
+                    lines.Add(currentLine);
+                    currentLine = "";
                     line++;
                 }                
                 else if (Char.IsWhiteSpace(c))
@@ -143,15 +153,12 @@ namespace JSONValidator
                             if (numberRegex.IsMatch(tmp))
                                 TokensList.Add(new Token(Token.NUMBER, i, line));
                             else
-                                throw new ParseJSONException("Failed in line:" + line + " char:" + i + "! Number was expected!");
+                                throw new ParseJSONException(ErrorMessage.errorMsg(line, i, "Number, logic value or string not in quotes!"));
                             tmp = "";
                         }
                         //TRUE
                         else if (c == 't' || c == 'T')
                         {
-                            //Console.WriteLine(json[i].ToString()+ " " + json[i + 1].ToString() + " " + json[i + 2].ToString() +" "+ json[i + 3].ToString());
-                            //tmp = json.Substring(i, i + 3).ToLower();   
-                            //Powinno byc to co powyzej ale jest bug w bibliotece i nie zawsze dziala poprawnie funkcja substring
                             tmp = (json[i].ToString() + json[i + 1].ToString() + json[i + 2].ToString() + json[i + 3].ToString()).ToLower(); 
                             if (String.Equals(tmp,"true"))
                             {
@@ -162,13 +169,12 @@ namespace JSONValidator
                             }
                             else
                             {
-                                throw new ParseJSONException("Failed in line:" + line + " char:" + i + "! String not in quotes!");
+                                throw new ParseJSONException(ErrorMessage.errorMsg(line, i, "Number, logic value or string not in quotes!"));
                             }
                         }
                         //FALSE
                         else if (c == 'f' || c == 'F')
                         {
-                            //tmp = json.Substring(i, i + 5).ToLower();
                             tmp = (json[i].ToString() + json[i+1].ToString() + json[i+2].ToString() + json[i+3].ToString() + json[i+4]).ToLower();
                             if (String.Equals(tmp, "false"))
                             {
@@ -179,13 +185,12 @@ namespace JSONValidator
                             }
                             else
                             {
-                                throw new ParseJSONException("Failed in line:" + line + " char:" + i + "! String not in quotes!");
+                                throw new ParseJSONException(ErrorMessage.errorMsg(line, i, "Number, logic value or string not in quotes!"));
                             }
                         }
                         //NULL
                         else if (c == 'n' || c == 'N')
                         {
-                           // tmp = json.Substring(i , i + 4).ToLower();
                             tmp = (json[i].ToString() + json[i+1].ToString() + json[i+2].ToString() + json[i+3].ToString()).ToLower();
                             if (String.Equals(tmp, "null"))
                             {
@@ -196,33 +201,39 @@ namespace JSONValidator
                             }
                             else
                             {
-                                throw new ParseJSONException("Failed in line:" + line + " char:" + i + "! String not in quotes!");
+                                throw new ParseJSONException(ErrorMessage.errorMsg(line, i, "Number, logic value or string not in quotes!"));
                             }
                         }
                             //else jest zle
                         else
                         {
-                            throw new ParseJSONException("Failed in line:" + line + " char:" + i + "! String not in quotes!");
+                            throw new ParseJSONException(ErrorMessage.errorMsg(line, i, "Number, logic value or string not in quotes!"));
                         }
                     }
                     catch (IndexOutOfRangeException)
                     {
-                        throw new ParseJSONException("Failed in line:" + line + " char:" + i + "! Unexpected EOF!");
+                        throw new ParseJSONException(ErrorMessage.errorMsg(line, i, "Unexpected EOF!"));
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        throw new ParseJSONException("Failed in line:" + line + " char:" + i + "! Unexpected EOF!");
+                        throw new ParseJSONException(ErrorMessage.errorMsg(line, i, "Unexpected EOF!"));
                     }
                 }
                 else if (isIn)
                 {
-                    TokensList.Add(new Token(Token.CHAR, i, line));
+                    if (lastChar != '\\')
+                    {
+                        TokensList.Add(new Token(Token.CHAR, i, line));
+                    }
+                    else
+                    {
+                        throw new ParseJSONException(ErrorMessage.errorMsg(line, i, "Got unexpected char '\\'"));
+                    }
                 }
 
                 lastChar = c;
             }
-
-            //Kończymy
+            lines.Add(currentLine); //dodanie ostatniej linii
             TokensList.Add(new Token(Token.END, i, line));
             return false;
         }

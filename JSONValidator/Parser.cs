@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace JSONValidator
 {
+    /* Analizator składniowy */
     public class Parser
     {
         public List<Token> tokens;
@@ -14,7 +15,7 @@ namespace JSONValidator
 
         /*
          * Całość wg gramatyki w docx 
-        */
+         */
         public Parser()
         {
             tokens = new List<Token>();
@@ -40,7 +41,7 @@ namespace JSONValidator
                     array();
                     break;
                 default:
-                    throw new ParseJSONException("Bad char on start of JSON file! Line:1 Char:1");                
+                    throw new ParseJSONException("Failed on start of JSON file! Line:1 Char:1");                
             }
         }
 
@@ -138,9 +139,7 @@ namespace JSONValidator
                     objectFun();                    
                     break;
                 default:
-                    throw new ParseJSONException("Bad char on  Line:" + tokens[index].getLine() + " on char:"
-                    + tokens[index].getCnumber() + " Got:'" + tokens[index].ToString()
-                    + "' Expected any of: \",TRUE,FALSE,Number,Null,array,object ");
+                    throw new ParseJSONException(ErrorMessage.errorMsg(tokens[index], "TRUE, FALSE, Number, Null, array, object", tokens[index].getLine()));
             }
         }
 
@@ -154,9 +153,7 @@ namespace JSONValidator
                     checkLex(Token.QUOTE);
                     break;
                 default:
-                    throw new ParseJSONException("Bad char on  Line:" + tokens[index].getLine() + " on char:"
-                    + tokens[index].getCnumber() + " Got:'" + tokens[index].ToString()
-                    + "' Expected: QUOTE");
+                    throw new ParseJSONException(ErrorMessage.errorMsg(tokens[index], "QUOTE", tokens[index].getLine()));
             }
         }
 
@@ -184,9 +181,7 @@ namespace JSONValidator
                     checkLex(Token.TRUE);
                     break;
                 default:
-                    throw new ParseJSONException("Bad char on  Line:" + tokens[index].getLine() + " on char:"
-                    + tokens[index].getCnumber() + " Got:'" + tokens[index].ToString()
-                    + "' Expected: true or false");
+                    throw new ParseJSONException(ErrorMessage.errorMsg(tokens[index], "true or false", tokens[index].getLine()));
             }
         }
 
@@ -212,10 +207,10 @@ namespace JSONValidator
             }
             else
             {
-                throw new ParseJSONException("Bad char on  Line:" + tokens[index].getLine() + " on char:" 
-                    + tokens[index].getCnumber() + " Got:'" + tokens[index].ToString() 
-                    + "' Expected: " + new Token(p,0,0).ToString() );
+                throw new ParseJSONException(ErrorMessage.errorMsg(tokens[index], new Token(p, 0, 0).ToString(), tokens[index].getLine()));
             }
         }
+
+        
     }
 }

@@ -22,6 +22,7 @@ namespace JSONValidator
         {
             jsonTextBox.Text = "";
             resultTextBox.Text = "";
+            panel4.BackColor = panel3.BackColor;
         }
 
         private void validateButton_Click(object sender, EventArgs e)
@@ -37,11 +38,15 @@ namespace JSONValidator
 	        }
 	        catch (ParseJSONException pje){
                 failed = true;
-                resultTextBox.Text = pje.Message + "\n"  + " Validation failed."; 
+                panel4.BackColor = Color.Red;
+                resultTextBox.Text = pje.Message + "\n"  + "Validation failed."; 
 	        }
-           
+
             if (!failed)
+            {
                 resultTextBox.Text = "Json is valid.";
+                panel4.BackColor = Color.Green;
+            }
             failed = false;
 #if DEBUG
             foreach(Token t in TokensList){
